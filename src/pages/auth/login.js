@@ -15,8 +15,8 @@ export default function Login() {
     const GoogleLogin = async () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
-            console.log(result.user);
             route.push('/dashboard');
+            console.log(result.user);
         }
         catch (error) {
             console.log(error);
@@ -32,11 +32,10 @@ export default function Login() {
             const token = credential.accessToken;
             let photoURL = result.user.photoURL + '?height=500&access_token=' + token;
             await updateProfile(auth.currentUser, { photoURL: photoURL });
-            console.log(result);
+            route.push('dashboard')
         }
         catch (error) {
             console.log(error);
-            route.push('dashboard')
         }
     }
 

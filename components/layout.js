@@ -2,7 +2,7 @@ import Nav from './Nav';
 
 export default function Layout({ childeren }) {
     return (
-        <div className='sm:mx-14 mx-10'>
+        <div className='mx-14 h-screen'>
             <Nav />
             <main>{childeren}</main>
         </div>

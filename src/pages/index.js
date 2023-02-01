@@ -20,9 +20,12 @@ export default function Home() {
           className='mx-auto my-12'
           priority
         />
-        <h3 className='text-xl text-center mt-8'>Atomic Habit is a habits managment application that helps you create good habits, break bad ones, and get things done. It is simple but powerful.</h3>
+        <h3 className='text-xl text-center mt-8'>Atomic Habit is a task managment application that helps you create good habits, break bad ones, and get things done. It is simple but powerful.</h3>
 
       </main>
+      <footer className='w-full h-16 fixed left-0 bottom-0 flex justify-center items-center text-ml'>
+        ©Atomic Habit™. All Rights Reserved.
+      </footer>
     </>
   )
 }
