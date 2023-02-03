@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import {
   addDoc,
   collection,
@@ -50,7 +49,20 @@ export const postHabit = async (uid, habit) => {
   }
 };
 
-export const deleteStudent = async (uid, habit) => {
+export const editHabit = async (uid, habit, id) => {
+  try {
+    const existingHabits = await getHabits(uid);
+    existingHabits[id] = habit;
+    const ref = doc(db, "habits", uid);
+    await updateDoc(ref, {
+      habits: existingHabits,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteHabit = async (uid, habit) => {
   try {
     const ref = doc(db, "habits", uid);
     await updateDoc(ref, {

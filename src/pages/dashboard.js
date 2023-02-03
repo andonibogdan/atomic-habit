@@ -44,7 +44,7 @@ export default function Dashboard() {
       )}
       <button
         onClick={() => auth.signOut()}
-        className="block mx-auto my-8 text-white p-3 font-medium rounded-lg bg-teal-500"
+        className="block mx-auto mt-20 text-white w-[100px] h-[40px]  font-medium rounded-lg bg-red-500"
       >
         Sign out
       </button>
