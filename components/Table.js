@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteHabit } from "utils/firestore";
 import { editHabit } from "utils/firestore";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { MdDone } from "react-icons/md";
 
 export const Table = ({ habits, refreshData }) => {
   const [user, loading] = useAuthState(auth);
@@ -40,7 +40,7 @@ export const Table = ({ habits, refreshData }) => {
     const newHabit = cells.find((cell) => cell.id === id);
     editHabit(
       user.uid,
-      { title: newHabit.title, hours: newHabit.hours },
+      { title: newHabit.title, hours: newHabit.hours, logs: newHabit.logs },
       newHabit.id
     )
       .then(() => {
@@ -50,13 +50,25 @@ export const Table = ({ habits, refreshData }) => {
   };
 
   const handleDeleteHabit = async (habit) => {
-    deleteHabit(user.uid, { title: habit.title, hours: habit.hours })
+    deleteHabit(user.uid, {
+      title: habit.title,
+      hours: habit.hours,
+      logs: habit.logs,
+    })
       .then(() => {
         refreshData();
       })
       .catch((error) => console.log(error));
   };
 
+  const remainingHours = (cell) => {
+    const hours = cell.hours;
+    let spentHours = 0;
+    if (cell.hasOwnProperty("logs")) {
+      spentHours = cell.logs.reduce((acc, log) => acc + log.hours, 0);
+    }
+    return hours - spentHours;
+  };
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -69,7 +81,7 @@ export const Table = ({ habits, refreshData }) => {
               Habit
             </th>
             <th scope="col" className="px-2 py-3">
-              Progress
+              Remaining time (h)
             </th>
             <th scope="col" className="py-3"></th>
             <th scope="col" className="py-3"></th>
@@ -108,18 +120,24 @@ export const Table = ({ habits, refreshData }) => {
                     cell.title
                   )}
                 </td>
-                <td className="px-2 py-2">{cell.hours}</td>
+                <td className="px-2 py-2">
+                  {remainingHours(cell) <= 0 ? (
+                    <MdDone />
+                  ) : (
+                    remainingHours(cell)
+                  )}
+                </td>
                 <td className="py-4 text-right">
                   {cell.editable ? (
                     <button
-                      className="text-[#9fa7b3]  hover:text-blue-500 font-medium"
+                      className="text-[#9fa7b3]  hover:text-blue-500 font-medium mx-2"
                       onClick={() => handleSave(cell.id, cell.title)}
                     >
                       Save
                     </button>
                   ) : (
                     <button
-                      className="text-[#9fa7b3]  hover:text-blue-500 font-medium"
+                      className="text-[#9fa7b3]  hover:text-blue-500 font-medium mx-2"
                       onClick={() => handleEdit(cell.id)}
                     >
                       Edit
@@ -129,15 +147,15 @@ export const Table = ({ habits, refreshData }) => {
                 <td className="py-4 text-center">
                   <button
                     onClick={() => handleDeleteHabit(cell)}
-                    className="text-[#9fa7b3]  hover:text-red-500 font-medium"
+                    className="text-[#9fa7b3]  hover:text-red-500 font-medium mx-2"
                   >
                     Delete
                   </button>
                 </td>
                 <td className="py-4 ">
                   <Link
-                    href={`/habit/${cell.title}`}
-                    className="text-[#9fa7b3] hover:text-yellow-500 font-medium"
+                    href={`/habit/${cell.id}`}
+                    className="text-[#9fa7b3] hover:text-yellow-500 font-medium mx-2"
                   >
                     Log
                   </Link>

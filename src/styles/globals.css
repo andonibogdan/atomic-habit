@@ -18,3 +18,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.Typewriter__wrapper {
+  font-size: 40px;
+  text-align: center;
+}
+
+.Typewriter__cursor {
+  font-size: 40px;
+}
