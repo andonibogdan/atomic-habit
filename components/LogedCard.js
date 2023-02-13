@@ -11,7 +11,7 @@ const LogedCard = ({ id, hours, text, handleDelete }) => {
         <p className="font-normal text-gray-700 my-2 text-justify">{text}</p>
         <BiTrash
           onClick={handleDelete}
-          className="absolute top-4 right-4 cursor-pointer hover:text-red-600"
+          className="absolute top-4 right-4 cursor-pointer hover:text-gray-600"
           size={"1.5rem"}
         />
       </div>

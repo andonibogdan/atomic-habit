@@ -97,7 +97,8 @@ const HabitLog = () => {
                   </label>
                   <input
                     type="number"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 focus-visible:focus:ring-black"
+                    min={1}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-black focus:border-black  focus-visible:focus:ring-black"
                     placeholder="Number of hours spend..."
                     required
                   />
@@ -146,13 +147,6 @@ const HabitLog = () => {
         )}
       </div>
       {showLogs && (
-        // <button
-        //   onClick={() => setShowLogs(false)}
-        //   type="button"
-        //   className="text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center block my-8 mx-auto"
-        // >
-        //   Go back
-        // </button>
         <button
           onClick={() => setShowLogs(false)}
           className="relative inline-flex items-center justify-center p-4 px-4 py-2 overflow-hidden font-medium text-black transition duration-300 ease-out border-2 border-black rounded-full shadow-md group mx-auto md:mx-24 my-4 w-full md:w-fit"
@@ -167,9 +161,9 @@ const HabitLog = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M14 5l7 7m0 0l-7 7m7-7H3"
               ></path>
             </svg>
@@ -183,7 +177,7 @@ const HabitLog = () => {
       {!showLogs && (
         <Link
           href="/dashboard"
-          className="relative inline-flex items-center justify-center p-4 px-4 py-2 overflow-hidden font-medium text-black transition duration-300 ease-out border-2 border-black rounded-full shadow-md group mx-auto md:mx-24 mt-4 w-full md:w-fit "
+          className="relative inline-flex items-center justify-center p-4 px-4 py-2 overflow-hidden font-medium text-black transition duration-300 ease-out border-2 border-black rounded-full shadow-md group mx-auto md:mx-24 my-4 w-full md:w-fit "
           type="button"
         >
           <span className="absolute inset-0 flex items-center justify-center w-full h-full text-black duration-300 -translate-x-full bg-black-500 group-hover:translate-x-0 ease">
@@ -195,9 +189,9 @@ const HabitLog = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M14 5l7 7m0 0l-7 7m7-7H3"
               ></path>
             </svg>

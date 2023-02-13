@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteHabit } from "utils/firestore";
 import { editHabit } from "utils/firestore";
 import Link from "next/link";
-import { MdDone } from "react-icons/md";
+import { MdDone, MdMoreTime } from "react-icons/md";
 
 export const Table = ({ habits, refreshData }) => {
   const [user, loading] = useAuthState(auth);
@@ -50,11 +50,12 @@ export const Table = ({ habits, refreshData }) => {
   };
 
   const handleDeleteHabit = async (habit) => {
-    deleteHabit(user.uid, {
+    const habitData = {
       title: habit.title,
       hours: habit.hours,
-      logs: habit.logs,
-    })
+      logs: habit.logs || [],
+    };
+    deleteHabit(user.uid, habitData)
       .then(() => {
         refreshData();
       })
@@ -70,7 +71,7 @@ export const Table = ({ habits, refreshData }) => {
     return hours - spentHours;
   };
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg mb-8">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -81,7 +82,7 @@ export const Table = ({ habits, refreshData }) => {
               Habit
             </th>
             <th scope="col" className="px-2 py-3">
-              Remaining time (h)
+              Remaining(h)
             </th>
             <th scope="col" className="py-3"></th>
             <th scope="col" className="py-3"></th>
@@ -121,10 +122,15 @@ export const Table = ({ habits, refreshData }) => {
                   )}
                 </td>
                 <td className="px-2 py-2">
-                  {remainingHours(cell) <= 0 ? (
+                  {remainingHours(cell) === 0 ? (
                     <MdDone />
-                  ) : (
+                  ) : remainingHours(cell) > 0 ? (
                     remainingHours(cell)
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      <MdMoreTime />
+                      <span>{Math.abs(remainingHours(cell))}</span>
+                    </div>
                   )}
                 </td>
                 <td className="py-4 text-right">
@@ -152,10 +158,10 @@ export const Table = ({ habits, refreshData }) => {
                     Delete
                   </button>
                 </td>
-                <td className="py-4 ">
+                <td className="py-4">
                   <Link
                     href={`/habit/${cell.id}`}
-                    className="text-[#9fa7b3] hover:text-yellow-500 font-medium mx-2"
+                    className="text-[#9fa7b3] hover:text-yellow-500 font-medium ml-2 mr-1"
                   >
                     Log
                   </Link>
